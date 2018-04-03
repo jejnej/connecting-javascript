@@ -21,7 +21,9 @@ const client = new pg.Client({
 function findPerson(rows) {
 
   console.log(`Found ${rows.length} person(s) by the name '${name}':`);
-
+ if(rows.length === 0 ) {
+    console.log("Try another search")
+  }
   rows.forEach( function(row) {
     const id = row.id;
     const firstName = row.first_name;
