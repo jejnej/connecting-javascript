@@ -36,14 +36,21 @@ function findPerson(rows) {
 
 console.log("Searching ...");
 
-knex.select().from('famous_people')
-  .where('first_name', name)
-  .orWhere('last_name', name)
-  .asCallback(function(err, rows) {
-    if (err) return console.error(err);
-    findPerson(rows);
-  })
-  .finally(function() {
+// knex.select().from('famous_people')
+//   .where('first_name', name)
+//   .orWhere('last_name', name)
+//   .asCallback(function(err, rows) {
+//     if (err) return console.error(err);
+//     findPerson(rows);
+//   })
+//   .finally(function() {
+//     knex.destroy();
+  // })
+
+// Knex using Promises
+knex.select().from('famous_people').where('first_name', name).orWhere('last_name', name)
+.then(rows => findPerson(rows))
+.catch(err => console.error(err))
+.finally(function() {
     knex.destroy();
   })
-
